@@ -518,6 +518,7 @@ namespace eventual
                 auto block = _self.lock();
                 assert(block);
 
+                using namespace std;
                 class ExitNotifier
                 {
                 public:
@@ -536,11 +537,11 @@ namespace eventual
 
                     void Add(strong_reference&& block)
                     {
-                        _exitFunctions.emplace(std::forward<strong_reference>(block));
+                        _exitFunctions.emplace(forward<strong_reference>(block));
                     }
 
                 private:
-                    std::queue<strong_reference> _exitFunctions;
+                    queue<strong_reference> _exitFunctions;
                 };
 
                 thread_local ExitNotifier notifier;
@@ -1116,12 +1117,14 @@ namespace eventual
                 BasicTask<TFunctor, TResultType, TArgType&>&& task,
                 TArgType&& argument)
             {
+                using namespace std;
                 using task_t = BasicTask<TFunctor, TResultType, TArgType&>;
+
                 return
-                   [
-                      task = std::forward<task_t>(task),
-                      argument = std::forward<TArgType>(argument)
-                   ]() mutable { task(argument); };
+                    [
+                        task = std::forward<task_t>(task),
+                        argument = std::forward<TArgType>(argument)
+                    ]() mutable { task(argument); };
             }
 
             template<class TFunctor, class TResultType, class TArgType>
@@ -1129,6 +1132,7 @@ namespace eventual
                 BasicTask<TFunctor, TResultType, TArgType>&& task,
                 TArgType&& argument)
             {
+                using namespace std;
                 using task_t = BasicTask<TFunctor, TResultType, TArgType>;
 
                 return
@@ -1143,6 +1147,7 @@ namespace eventual
                 BasicTask<TFunctor, TResultType, TArgType&&>&& task,
                 TArgType&& argument)
             {
+                using namespace std;
                 using task_t = BasicTask<TFunctor, TResultType, TArgType&&>;
 
                 return
