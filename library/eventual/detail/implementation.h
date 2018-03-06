@@ -498,6 +498,7 @@ namespace eventual
             {
                 for (auto& cb : _callbacks)
                     cb(); // todo: exceptions?
+                _callbacks.clear();
             }
 
             void Wait(unique_lock& lock) const
